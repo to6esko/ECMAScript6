@@ -15,8 +15,8 @@
 	 
 	 <header id="header" class="">
 	 	<h1><div class="head-num">Глава 6</div>Символи</h1>
-	 	<p>Символите са нов примитивен тип въведен в ECMAScript 6, свързващ съществуващите примитивни типове: <em>strings, numbers, booleans, null</em> и <em>undefined</em>. В ECMAScript 6 символите поставят началото на начин за създаване на частни членове на обекти, характеристика, която  JavaScript програмистите отдавна очакваха. Всяко свойство с име <em>string</em> е лесен начин за достъп, независимо от неяснотата на името. Първоначално значението на "частните имена" имаше за цел да създаде <em>non-string</em> свойство на имената. Но по този начин нормалните техники за откриване на тези частни имена нямаше да работят.</p>
-	 	<p>Предложението за частни имена в крайна сметка се превърна в  ECMAScript 6 символи. Макар подробностите по изпълнението да остават същите (<em>non-string</em> стойности за свойство на имената), целта за неприкосновенност намаля. Вместо това, свойствата на символите се категоризират по отделно, без да са <em>non-enumerable</em> по подразбиране, но все още лесно откриваеми.</p>
+	 	<p>Символите са нов примитивен тип въведен в ECMAScript 6, присъединявайки се към съществуващите примитивни типове: <em>strings, numbers, booleans, null</em> и <em>undefined</em>. В ECMAScript 6 символите поставят началото на начин за създаване на частни членове на обекти, характеристика, която  JavaScript програмистите отдавна очакваха. Преди символи, всяко свойство с име <em>string</em> е лесен начин за достъп, независимо от неяснотата на името и функцията "private names" имаше за цел да позволи на програмистите да създадат <em>non-string</em> свойство на имената, но по този начин нормалните техники за откриване на тези частни имена нямаше да работят.</p>
+	 	<p>Предложението за частни имена в крайна сметка се превърна в  ECMAScript 6 символи и тази глава ще ви научи как да използвате символи ефективно. Макар подробностите по изпълнението да остават същите (<em>non-string</em> стойности за свойство на имената), целта за неприкосновенност намаля. Вместо това, свойствата на символите се категоризират отделно от други обектни свойства.</p>
 	 	
 	 </header><!-- /header -->
 	 <article>
@@ -24,8 +24,8 @@
 	 	<p> Символите са уникални сред JavaScript примитивните типове, с това че не разполагат с литерална форма (<em>true</em> за булев тип или 42 за числа). Можем да създадем символ с помощта на глобалната <em>Symbol</em> функция, както в този пример:</p> 
 	 	<dl>
 	 		<dd><pre class="highlight">
-<span class="code">var</span> firstName = Symbol();
-<span class="code">var</span> person = {};
+<span class="code">let</span> firstName = Symbol();
+<span class="code">let</span> person = {};
 
 person[firstName] = "Nicholas";
 console.log(person[firstName]);     // "Nicholas"
@@ -40,12 +40,12 @@ console.log(person[firstName]);     // "Nicholas"
 	 	<p>Функцията <em>Symbol</em> приема незадължителен аргумент с описанието на символа. Самото описание не може да се използва за достъп до свойството, но се използва с цел на отстраняване на грешки. Например:</p>
 	 	<dl>
 	 		<dd><pre class="highlight">
-<span class="code">var</span> firstName = Symbol("first name");
-<span class="code">var</span> person = {};
+<span class="code">let</span> firstName = Symbol("first name");
+<span class="code">let</span> person = {};
 
 person[firstName] = "Nicholas";
 
-console.log("first name" in person);    // false
+console.log("first name" <span class="code">in</span> person);    // false
 console.log(person[firstName]);         // "Nicholas"
 console.log(firstName);                 // "Symbol(first name)"
 	 		</pre></dd>
@@ -55,7 +55,7 @@ console.log(firstName);                 // "Symbol(first name)"
 	 	<h3>Идентифициране на символи</h3>
 	 	<p>Тъй като, символите са примитивни стойности, можем да използваме оператора <em>typeof</em> за да определи дали дадена променлива съдържа символ. ECMAScript 6 разширява <em>typeof</em> да връща "symbol", когато се използва за символ. Например:</p>
 	 	<pre class="highlight">
-<span class="code">var</span> symbol = Symbol("test symbol");
+<span class="code">let</span> symbol = Symbol("test symbol");
 console.log(<span class="code">typeof</span> symbol);    // "symbol"
 	 		</pre>
 	 	<p>Докато има и други косвени начини за определяне дали дадена променлива е символ, <em>typeof</em> е най-точен и предпочитан начин за това.</p>
@@ -64,18 +64,18 @@ console.log(<span class="code">typeof</span> symbol);    // "symbol"
 	 	<p>Можем да използваме символи навсякъде, където трябва да изчисляваме име на свойство. Вече сме виждали използването на скоби нотацията в тази глава, но можем да използваме символите за  изчисляване на имената на свойствата за обектите, както с <em>Object.defineProperty()</em> така и с <em>Object.defineProperties()</em>, като това:</p>
 	 	<dl>
 	 		<dd><pre class="highlight">
-<span class="code">var</span>  firstName = Symbol("first name");
+<span class="code">let</span> firstName = Symbol("first name");
 <span class="comment">// използва изчисляване на свойство за обект литерал </span>
-<span class="code">var</span>  person = {
+<span class="code">let</span> person = {
     [firstName]: "Nicholas"
 };
 
 <span class="comment">// прави свойството само за четене</span>
-<span class="code">Object</span> .defineProperty(person, firstName, { writable: <span class="code">false</span>  });
+<span class="code">Object</span>.defineProperty(person, firstName, { writable: <span class="code">false</span>  });
 
-<span class="code">var</span>  lastName = Symbol("last name");
+<span class="code">let</span> lastName = Symbol("last name");
 
-<span class="code">Object</span> .defineProperties(person, {
+<span class="code">Object</span>.defineProperties(person, {
     [lastName]: {
         value: "Zakas",
         writable: <span class="code">false</span> 
@@ -86,15 +86,15 @@ console.log(person[firstName]);     // "Nicholas"
 console.log(person[lastName]);      // "Zakas"
 	 		</pre></dd>
 	 	</dl>
-	    <p>Този пример използва изчисляване на свойство за обект литерал, за създаване на <em>firstName</em> символ свойство. Свойството е създадено не номерирано, за разлика от изчислените свойства създадени с помощта на <em>nonsymbol</em> имена. Следващия ред, прави свойството само за четене. По-късно, свойството на символа само за четене <em>lastName</em> е създадено с помощта на <em>Object.defineProperties()</em>. Изчисляването на свойство за обект литерал се използва отново, само че този път е част от втория аргумент на <em>Object.defineProperties()</em>.</p>
+	    <p>Този пример първо използва изчисляване на свойство за обект, за създаване на <em>firstName</em> символ свойство. Свойството е създадено не номерирано, за разлика от изчислените свойства създадени с помощта на <em>nonsymbol</em> имена. Следващия ред, прави свойството само за четене. По-късно, свойството на символа само за четене <em>lastName</em> е създадено с помощта на <em>Object.defineProperties()</em>. Изчисляването на свойство за обект се използва отново, само че този път е част от втория аргумент на <em>Object.defineProperties()</em>.</p>
 	    <p>Докато символите могат да бъдат използвани на всяко място, където е позволено изчисляване на имена за свойства, трябва да има система за споделяне на тези символи за да ги използваме ефективно.</p>
 	    <h3>Споделяне на символи</h3>
 	    <p>Може да откриете, че искате различни части от вашия код да използват едни и същи символи. Да предположим, че имате два различни типа обекти във вашето приложение, които трябва да използват същото свойство на символ за предоставяне на уникален идентификатор. Следенето на символи във файлове или големи база код данни, може да бъде трудно и податливо на грешки. Ето защо  ECMAScript 6 осигурява глобален регистър на символи, до който може да получите достъп по всяко време.</p>
 	    <p>Когато искате да създадете символ, който да бъде споделен, трябва да използвате <em>Symbol.for()</em> вместо <em>Symbol()</em>. Метода <em>Symbol.for()</em> приема един единствен параметър, който идентифицира <em>string</em> за символа, който искате да създадете (тази стойност се използва, като описание). Например:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
-<span class="code">var</span> uid = Symbol.<span class="code">for</span>("uid");
-<span class="code">var</span> object = {};
+<span class="code">let</span> uid = Symbol.<span class="code">for</span>("uid");
+<span class="code">let</span> object = {};
 
 object[uid] = "12345";
 
@@ -102,19 +102,19 @@ console.log(object[uid]);       // "12345"
 console.log(uid);               // "Symbol(uid)"
 	    	</pre></dd>
 	    </dl>
-	    <p>Метода <em>Symbol.for()</em> първо търси в глобален регистър за символи, за да види дали символ с ключ "uid" съществува. Ако е така, след това се връща на вече съществуващия символ. Ако няма съществуващ такъв символ, тогава създава нов символ и го регистрира в глобалния регистър за символи, използвайки указания ключ. След това новия символ се връща. Това означава, че следващите извиквания на <em>Symbol.for()</em> ще използват един и същи ключ за връщане на същия символ:</p>
+	    <p>Метода <em>Symbol.for()</em> първо търси в глобалния регистър за символи, за да види дали символ с ключ "uid" съществува. Ако е така, след това се връща на вече съществуващия символ. Ако няма съществуващ такъв символ, тогава създава нов символ и го регистрира в глобалния регистър за символи, използвайки указания ключ. След това новия символ се връща. Това означава, че следващите извиквания на <em>Symbol.for()</em> ще използват един и същи ключ за връщане на същия символ:</p>
 	    <dl>
 	    	<dd>
 	    		<pre class="highlight">
-<span class="code">var</span> uid = Symbol.<span class="code">for</span>("uid");
-<span class="code">var</span> object = {
+<span class="code">let</span> uid = Symbol.<span class="code">for</span>("uid");
+<span class="code">let</span> object = {
     [uid]: "12345"
 };
 
 console.log(object[uid]);       // "12345"
 console.log(uid);               // "Symbol(uid)"
 
-<span class="code">var</span> uid2 = Symbol.<span class="code">for</span>("uid");
+<span class="code">let</span> uid2 = Symbol.<span class="code">for</span>("uid");
 
 console.log(uid === uid2);      // true
 console.log(object[uid2]);      // "12345"
@@ -126,13 +126,13 @@ console.log(uid2);              // "Symbol(uid)"
 	    <p>Друг уникален аспект на споделените символи е, че можем да извлечем ключа, свързан със символа в регистъра за глобални символи с помощта на <em>Symbol.keyFor()</em>, например:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
-<span class="code">var</span> uid = Symbol.<span class="code">for</span>("uid");
+<span class="code">let</span> uid = Symbol.<span class="code">for</span>("uid");
 console.log(Symbol.keyFor(uid));    // "uid"
 
-<span class="code">var</span> uid2 = Symbol.<span class="code">for</span>("uid");
+<span class="code">let</span> uid2 = Symbol.<span class="code">for</span>("uid");
 console.log(Symbol.keyFor(uid2));   // "uid"
 
-<span class="code">var</span> uid3 = Symbol("uid");
+<span class="code">let</span> uid3 = Symbol("uid");
 console.log(Symbol.keyFor(uid3));   // undefined
 	    	</pre></dd>
 	    </dl>
@@ -147,7 +147,7 @@ console.log(Symbol.keyFor(uid3));   // undefined
 	    <p>Примерите в тази глава използват <em>console.log()</em> за да покажат на изхода, че символа работи, защото <em>console.log()</em> извиква <em>String()</em> върху своите аргументи. Можете да използвате <em>String()</em> директно за да получите същия резултат. Например:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
-<span class="code">var</span> uid = Symbol.<span class="code">for</span>("uid"),
+<span class="code">let</span> uid = Symbol.<span class="code">for</span>("uid"),
     desc = <span class="code">String</span>(uid);
 
 console.log(desc);              // "Symbol(uid)"
@@ -156,7 +156,7 @@ console.log(desc);              // "Symbol(uid)"
 	    <p>Функцията <em>String()</em> извиква <em>uid.toString()</em> и връща описанието на символ <em>string</em>. Ако се опитаме да свържем директно символа със <em>string</em>, ще бъде хвърлена грешка:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
-<span class="code">var</span> uid = Symbol.<span class="code">for</span>("uid"),
+<span class="code">let</span> uid = Symbol.<span class="code">for</span>("uid"),
     desc = uid + "";            // error!
 	    	</pre></dd>
 	    </dl>
@@ -164,7 +164,7 @@ console.log(desc);              // "Symbol(uid)"
 	    <p>По същия начин не може да се коригира символ в номер. Всички математически оператори предизвикват грешка, когато се прилагат за символ. Например:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
-<span class="code">var</span> uid = Symbol.<span class="code">for</span>("uid"),
+<span class="code">let</span> uid = Symbol.<span class="code">for</span>("uid"),
     sum = uid / 1;            // error!
 	    	</pre></dd>
 	    </dl>
@@ -175,12 +175,12 @@ console.log(desc);              // "Symbol(uid)"
 	    <p>Върнатата стойност от <em>Object.getOwnPropertySymbols()</em> е масив от символи със собствените им свойства, например:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
-<span class="code">var</span> uid = Symbol.<span class="code">for</span>("uid");
-<span class="code">var</span> object = {
+<span class="code">let</span> uid = Symbol.<span class="code">for</span>("uid");
+<span class="code">let</span> object = {
     [uid]: "12345"
 };
 
-<span class="code">var</span> symbols = Object.getOwnPropertySymbols(object);
+<span class="code">let</span> symbols = Object.getOwnPropertySymbols(object);
 
 console.log(symbols.length);        // 1
 console.log(symbols[0]);            // "Symbol(uid)"
@@ -188,10 +188,10 @@ console.log(object[symbols[0]]);    // "12345"
 	    	</pre></dd>
 	    </dl>
 	    <p>В този код, <em>object</em> има едно единствено свойство символ <em>uid</em>. Масивът върнат от <em>Object.getOwnPropertySymbols()</em> е масив съдържащ само този символ.</p>
-	    <p>Всички обекти започват с нулеви символни свойства, обектите могат да наследяват символни качества от своите прототипи. ECMAScript 6 предварително настройва няколко такива свойства.</p>
+	    <p>Всички обекти започват с нулеви символни свойства, но обектите могат да наследяват символни качества от своите прототипи. ECMAScript 6 предварително настройва няколко такива свойства.</p>
 	    <h3>Излагане на вътрешни операции с Well-Known символи</h3>
 	    <p>Централна тема и за двете ECMAScript 5 и ECMAScript 6 е да изложи и определи някои "магически" части на JavaScript - частите, които не могат да бъдат пример за подражание от програмист. ECMAScript 6 следва тази традиция чрез излагане на повече от преди, на вътрешната логика на езика. Това се постига главно чрез използване на прототипа на символни свойства, които определят основното поведение на някои обекти.</p>
-	    <p>ECMAScript 6 включва предварително зададени символи, наречени <em>well-known</em> (добре познати) символи, които показват общо поведение в JavaScript и които преди това са били считани само за вътрешни операции. Всеки <em>well-known</em> символ е представен от свойство на <em>Symbol</em> обекта, например като <em>Symbol.create</em></p>
+	    <p>ECMAScript 6 включва предварително зададени символи, наречени <em>well-known</em> символи, които показват общо поведение в JavaScript и които преди това са били считани само за вътрешни операции. Всеки <em>well-known</em> символ е представен от свойство на <em>Symbol</em> обекта, например като <em>Symbol.create</em></p>
 	    <p><em>Well-known</em> символи са:</p>
 	    <dl>
 	    	<dd><ul>
@@ -203,20 +203,20 @@ console.log(object[symbols[0]]);    // "12345"
 	    		<li><strong>Symbol.search </strong> - метод използван от <em>String.prototype.search()</em> за намиране на <em>substrings</em>.</li>
 	    		<li><strong>Symbol.species </strong> - конструктор от който са направени извлечените обекти (обяснен в <a href="09_classes.html">Глава 9</a> - Класове).</li>
 	    		<li><strong>Symbol.split </strong> - метод използван от <em>String.prototype.split()</em> за разделяне на <em>strings</em>.</li>
-	    		<li><strong>Symbol.toPrimitive </strong> - метод който връща представянето на примитивни стойности в обекта.</li>
+	    		<li><strong>Symbol.toPrimitive </strong> - метод който връща представянето на примитивна стойност в обекта.</li>
 	    		<li><strong>Symbol.toStringTag</strong> - <em>string</em> използван от <em>Object.prototype.toString()</em> за създаване на описание на обект.</li>
 	    		<li><strong>Symbol.unscopables</strong> - обект, чиито свойства са имената на свойствата на обекта, които не трябва да бъдат включени в <em>with</em> изявлентие.</li>
 	    	</ul></dd>
 	    </dl>
-	    <p>Някои от най-известните символи са обсъдени  по-долу , а други са разгледани в книгата, за да ги държи в правилния контекст.</p>
+	    <p>Някои от най-известните символи са обсъдени  по-долу , а други са разгледани в останалата част от книгата, за да ги държи в правилния контекст.</p>
 	    <dl>
 	    	<dd><div class="info">
          <img src="./img/info.jpg" alt="info">
-       </div><strong>Заменящия метод дефиниран с <em>well-known</em> символ, променя обикновен обект в екзотичен обект, защото това променя някои вътрешни поведения по подразбиране.</strong></dd>
+       </div><strong>Заменящия метод дефиниран с <em>well-known</em> символ, променя обикновен обект в екзотичен обект, защото това променя някои вътрешни поведения по подразбиране. Няма практическо отражение върху вашия код, като резултат, просто променя начина, по който спецификация описва обекта.</strong></dd>
 	    </dl><br>
 	    <h3>Symbol.hasInstance</h3>
-	    <p><em>Symbol.hasInstance</em> е свойство на функциите, които определят дали даден обект е или не е инстанция на тази функция. Символът е представен в код от <em>Symbol.hasInstance</em> и свойството символ е дефинирано от <em>Function.prototype</em>, така че всички функции наследяват поведение по подразбиране за <em>instanceof</em>. Самото свойство се определя, като <em>nonwritable</em> и <em>nonconfigurable</em> , като <em>nonenumerable</em> гарантира, че не се презаписва по погрешка. Метода <em>Symbol.hasInstance</em> приема един аргумент за стойност на проверка и връща <em>true</em> ако стойността е инстанция на функцията.</p>
-	    <p>За да разберем, как  <em>Symbol.hasInstancee</em> работи, нека да разгледаме следния код:</p>
+	    <p> Всяка функция има <em>Symbol.hasInstance</em> метод, които определя дали даден обект е инстанция на тази функция. Метода е дефиниран от <em>Function.prototype</em>, така че всички функции наследяват поведение по подразбиране за <em>instanceof</em> свойството. В <em>Symbol.hasInstance</em> самото свойство се определя, като <em>nonwritable</em> и <em>nonconfigurable</em>, като <em>nonenumerable</em> гарантира, че не се презаписва по погрешка.</p>
+	    <p>Метода <em>Symbol.hasInstance</em> приема един аргумент за стойност на проверка и връща <em>true</em>, ако стойността е инстанция на функцията. За да разберем, как  <em>Symbol.hasInstance</em> работи, нека да разгледаме следния код:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
 obj <span class="code">instanceof Array</span>;
@@ -242,12 +242,12 @@ obj <span class="code">instanceof Array</span>;
     }
 });
 
-<span class="code">var</span> obj = <span class="code">new</span> MyObject();
+<span class="code">let</span> obj = <span class="code">new</span> MyObject();
 
 console.log(obj <span class="code">instanceof</span> MyObject);       // false
 	    	</pre></dd>
 	    </dl>
-	    <p>Този пример използва <em>Object.defineProperty()</em>, за да презапише метода  <em>Symbol.hasInstance</em> с новата функция. (Трябва да използвате <em>Object.defineProperty()</em> за презаписване на <em>nonwritable</em> свойство.) Функцията винаги ще връща <em>false</em>, въпреки, че <em>obj</em> всъщност е инстанция на <em>MyObject</em>, защото оператора <em>instanceof</em> връща <em>false</em>.</p>
+	    <p>Трябва да използвате <em>Object.defineProperty()</em> за презаписване на <em>nonwritable</em> свойство. Така че, този пример използва този метод, за да презапише <em>Symbol.hasInstance</em> с новата функция. Новата функцията винаги ще връща <em>false</em>, въпреки, че <em>obj</em> всъщност е инстанция на <em>MyObject</em>, защото оператора <em>instanceof</em> връща <em>false</em>.</p>
 	    <p>Разбира се, може също да инспектира стойността и да реши дали стойността трябва да се разглежда, като нейна инстанция въз основа на всяко произволно състояние. Например, може би числа със стойност между 1 и 100, трябва да се считат за инстанция на специален вид номер:</p>
 	    <dl>
 	    	<dd><pre class="highlight">
@@ -261,14 +261,14 @@ console.log(obj <span class="code">instanceof</span> MyObject);       // false
     }
 });
 
-<span class="code">var</span> two = <span class="code">new Number</span>(2),
+<span class="code">let</span> two = <span class="code">new Number</span>(2),
     zero = <span class="code">new Number</span>(0);
 
 console.log(two <span class="code">instanceof</span> SpecialNumber);    // true
 console.log(zero <span class="code">instanceof</span> SpecialNumber);   // false
 	    	</pre></dd>
 	    </dl>
-	    <p>Този код дефинира <em>Symbol.hasInstance</em> метод и връща <em>true</em> ако стойността е инстанция на <em>Number</em> и също има стойност между 1 и  100.  Имайте в предвид, че левият операнд на <em>instanceof</em> трябва да бъде обект, за да задейства извикването към <em>Symbol.hasInstance</em>, докато <em>nonobjects</em> причинява <em>instanceof</em> просто да връща <em>false</em> през цялото време. Този код позволява на <em>SpecialNumber</em> да претендира, че <em>two</em> е инстанция на число въпреки, че няма пряка връзка между тях.</p>
+	    <p>Този код дефинира <em>Symbol.hasInstance</em> метод и връща <em>true</em> ако стойността е инстанция на <em>Number</em> и също има стойност между 1 и  100. По този начин, позволява на <em>SpecialNumber</em> да претендира, че <em>two</em> е нейна инстанция въпреки, че няма пряка връзка между функцията <em>SpecialNumber</em> и двете променливи. Имайте в предвид, че левият операнд на <em>instanceof</em> трябва да бъде обект, за да задейства извикването към <em>Symbol.hasInstance</em>, докато <em>nonobjects</em> причинява <em>instanceof</em> просто да връща <em>false</em> през цялото време.</p>
 	    <dl>
 	    	<dd><div class="worning">
          <img src="./img/worning.jpg" alt="worning">
@@ -331,14 +331,15 @@ console.log(messages);           // ["hi","Hello","world"]
 	    	</dd>
 	    </dl>
 	    <p>Преди ECMAScript 6, начина по който тези методи са взаимодействали с регулярния израз е бил скрит от програмистите. Това означава, че не е имало начин да се имитира това, което регулярния израз прави с помощта на определени от програмиста обекти. ECMAScript 6 дефинира четири символа, които отговарят на тези четири метода, ефективно отговарящи на поведението на вградения <em>RegExp</em> обект.</p>
-	    <p>Символите <em>Symbol.match, Symbol.replace, Symbol.search</em>  и <em>Symbol.split</em>  представляват методи на аргумента на регулярния израз, който трябва да се извика, като първи аргумент на <em>string</em> методите <em>match(), replace(), search()</em> и <em>split()</em>, съответно. Четирите символни свойства са дефинирани в <em>RegExp.prototype</em> , като те трябва да се използват по подразбиране при изпълнение на методите на <em>string</em>. Знаейки това, можем да използваме методите на <em>string</em> по начин, който е подобен на регулярен израз. За да направите това, може да използвате следния символ в кода:</p>
+	    <p>Символите <em>Symbol.match, Symbol.replace, Symbol.search</em>  и <em>Symbol.split</em>  представляват методи на аргумента на регулярния израз, който трябва да се извика, като първи аргумент на методите <em>match(), replace(), search()</em> и <em>split()</em>, съответно. Четирите символни свойства са дефинирани в <em>RegExp.prototype</em> , като те трябва да се използват по подразбиране при изпълнение на методите.</p> 
+		<p>Знаейки това, можем да създадем обект за използваме методите на <em>string</em> по начин, който е подобен на регулярен израз. За да направите това, може да използвате следните функции символ в кода:</p>
 	   <dl>
 	   	<dd>
 	   		<ul>
 	   			<li><strong>Symbol.match</strong> - функция, която приема за аргумент <em>string</em> и връща масив от съвпадения или <em>null</em>, ако не е намерила съвпадение.</li>
-	   			<li><strong>Symbol.replace</strong> - функция, която приема за аргумент <em>string</em> и <em>string</em> замяна и връща <em>string</em>.</li>
+	   			<li><strong>Symbol.replace</strong> - функция, която приема за аргумент <em>string</em> и <em>string</em> за замяна и връща <em>string</em>.</li>
 	   			<li><strong>Symbol.search</strong> - функция, която приема за аргумент <em>string</em> и връща номера с индекса на съвпадението или  -1, ако не е намерила съвпадение.</li>
-	   			<li><strong>Symbol.split</strong>- функция, която приема за аргумент <em>string</em>и връща масив съдържащ парчета от <em>string</em>-а, разделени от съвпаденията</li>
+	   			<li><strong>Symbol.split</strong>- функция, която приема за аргумент <em>string</em> и връща масив съдържащ парчета от <em>string</em>-а, разделени от съвпаденията</li>
 	   		</ul>
 	   	</dd>
 	   </dl>
@@ -398,13 +399,13 @@ console.log(split2);            // ["", ""]
 	   <dl>
 	   	<dd>
 	   		<ul>
-	   			<li><strong>"number"</strong> - номер, който трябва да бъде върнат</li>
-	   			<li><strong>"string" </strong> - <em>string</em>, който трябва да се върне</li>
-	   			<li><strong>"default"</strong> - операцията няма предпочитания за вида</li>
+	   			<li><strong>Ако <em>hint</em> e "number"</strong> - <em>Symbol.toPrimitive</em> трябва да върнe номер</li>
+	   			<li><strong>Ако <em>hint</em> e "string" </strong> - трябва да върне <em>string</em></li>
+	   			<li><strong>Ако <em>hint</em> е "default"</strong> - операцията няма предпочитания за вида</li>
 	   		</ul>
 	   	</dd>
 	   </dl>
-	   <p>За повечето стандартни обекти, поведението на <em>number</em> режим е:</p>
+	   <p>За повечето стандартни обекти, поведението на <em>number</em> режим има следния приоритет:</p>
 	   <dl>
 	   	<dd>
 	   		<ol>
@@ -414,7 +415,7 @@ console.log(split2);            // ["", ""]
 	   		</ol>
 	   	</dd>
 	   </dl>
-	   <p>По същия начин, за повечето стандартни обекти поведението на  <em>string</em> режим е:</p>
+	   <p>По същия начин, за повечето стандартни обекти поведението на  <em>string</em> режим има следния приоритет:</p>
 	   <dl>
 	   	<dd>
 	   		<ol>
@@ -451,19 +452,20 @@ Temperature.prototype[Symbol.toPrimitive] = <span class="code">function</span>(h
     }
 };
 
-<span class="code">var</span> freezing = <span class="code">new</span> Temperature(32);
+<span class="code">let</span> freezing = <span class="code">new</span> Temperature(32);
 
 console.log(freezing + "!");            // "32 degrees!"
 console.log(freezing / 2);              // 16
 console.log(<span class="code">String</span>(freezing));          // "32째"
 	   	</pre></dd>
 	   </dl>
-	   <p>Този пример дефинира <em>Temperature</em> конструктор и заменя метода по подразбиране на <em>Symbol.toPrimitive</em> прототипа. Различна стойност се връща в зависимост от <em>hint</em>, където <em>string</em> режима връща температура с Unicode символа за градус, <em>number</em> режима връща само цифрова стойност и режима по подразбиране и добавя думата “degrees” след цифрите. Всяко от изявленията в <em>swich</em> води до различен режим : оператора + задейства режим по подразбиране, оператора / задейства номер режим и <em>String()</em> функцията задейства <em>string</em> режим. Въпреки че е възможно да върне различни стойности за всичките три режима, много по-често използвано е да настроите режима на по подразбиране да е същия, като за <em>string</em> или номер режим.</p>
+	   <p>Този пример дефинира <em>Temperature</em> конструктор и заменя метода по подразбиране с <em>Symbol.toPrimitive</em> на прототипа. Различна стойност се връща в зависимост от това дали <em>hint</em> аргумента е <em>string</em>, <em>number</em> или <em>default</em> стойност. В <em>string</em> режима връща температура с Unicode символа за градус, <em>number</em> режима връща само цифрова стойност и режима по подразбиране и добавя думата “degrees” след цифрите.</p> 
+	   <p> Всяко от изявленията в <em>swich</em> води до различен режим : оператора + задейства <em>default</em> режим, оператора / задейства <em>number</em> режим и <em>String()</em> функцията задейства <em>string</em> режим. Въпреки че е възможно да върне различни стойности за всичките три режима, много по-често използвано е да настроите <em>default</em> режима да е същия, като за <em>string</em> или <em>number</em> режим.</p>
 	   <h3>Symbol.toStringTag</h3>
 	   <p>Един от най-интересните проблеми на JavaScript е наличието на множество глобални среди на изпълнение. Това се случва в уеб-браузъри, когато една страница включва вградена рамка на друга страница, като  всяка от тях има собствена среда на изпълнение. В повечето случаи това не е проблем, тъй като данните могат да се предават напред и назад между среди без да причиняват безпокойство. Проблемът възниква, когато се опитваме да се идентифицираме типа на обекта, с който имаме работа след като е бил прехвърлен между различните обекти.</p>
 	   <p>В каноничен пример, това е подаване на масив от вградената рамка в съдържащата страница или обратно. В ECMAScript 6 терминологията <em>iframe</em> и съдържаща страница представляват различни области, като изпълнителна среда за JavaScript. Всяка област има свой собствен глобален обхват с негово собствено копие на глобални обекти. В зависимост от това в коя област се създава масива, се определя вида на масива. Когато това е в различна среда на изпълнение <em>instanceof Array</em> връща <em>false</em>, защото масива е създаден с конструктор от различни среди.</p>
 	   <h3>Временно решение за идентифициране на проблема</h3>
-	   <p>Сблъсквайки се с този проблем разработчиците много скоро намериха добър начин да се идентифицират масиви. Те открили, че когато се извика стандартния метод <em>toString()</em> върху обект, се връща винаги предвидим <em>string</em>. По този начин , много JavaScript библиотеки, започнаха да включват функция, която работи подобно на това:</p>
+	   <p>Сблъсквайки се с този проблем програмистите много скоро намериха добър начин за идентифициране на масиви. Те открили, че когато се извика стандартния метод <em>toString()</em> върху обект, се връща винаги предвидим <em>string</em>. По този начин , много JavaScript библиотеки, започнаха да включват функция, която работи подобно на това:</p>
 	   <dl>
 	   	<dd><pre class="highlight-overflow">
 <span class="code">function</span> isArray(value) {
@@ -473,8 +475,8 @@ console.log(<span class="code">String</span>(freezing));          // "32째"
 console.log(isArray([]));   // true
 	   	</pre></dd>
 	   </dl>
-	   <p>Това може да изглежда малко, като кръгово движение, но в действителност е установено, че това работи добре във всички браузъри. Метода <em>toString()</em> за масиви не е много полезен за тази цел, тъй като връща <em>string</em> от елементите, които съдържа. Метода <em>toString()</em> на <em>Object.prototype</em>, обаче, има тази идея, където са включени няколко вътрешно дефинирани имена в резултата. Чрез използване на този метод на обект, можем да изтеглим това, което околната среда на JavaScript смята за тип на данните.</p>
-	   <p>Програмистите бързо осъзнаха, че тъй като няма начин да променят това поведение, е възможно да използват същия подход, който да прави разлика между местни обекти и тeзи създадени от разработчиците. Най-важния от тях е ECMAScript 5 JSON обекта.</p>
+	   <p>Това може да изглежда малко, като кръгово движение, но в действителност е установено, че работи добре във всички браузъри. Метода <em>toString()</em> за масиви не е много полезен за тази цел, тъй като връща <em>string</em> от елементите, които съдържа. Метода <em>toString()</em> на <em>Object.prototype</em>, обаче, има тази идея, където са включени няколко вътрешно дефинирани имена в резултата. Чрез използване на този метод на обект, можем да изтеглим това, което околната среда на JavaScript смята за тип на данните.</p>
+	   <p>Програмистите бързо осъзнаха, че тъй като няма начин да променят това поведение, е възможно да използват същия подход, който да прави разлика между местни обекти и тeзи създадени от програмисти. Най-важния от тях е ECMAScript 5 JSON обекта.</p>
 	   <p>Преди ECMAScript 5, много употребяван е <em>Douglas Crockford’s json2.js</em>, който създава глобален JSON обект. Когато браузърите започнаха да прилагат глобалния JSON обект, се наложи да се каже дали глобалния JSON е предоставен от самата среда на JavaScript или чрез някоя друга библиотека. С помощта на същата техника са създадени много функции, като тази:</p>
 	   <dl>
 	   	<dd><pre class="highlight">
@@ -484,9 +486,10 @@ console.log(isArray([]));   // true
 }
 	   	</pre></dd>
 	   </dl>
-	   <p>Тука, е същата характеристика, която позволява на програмистите да идентифицират масиви в границите на вградената рамка и също предоставя начин да се разбере дали JSON е местен или не. Не-местен JSON обект ще върне [object Object], докато местния обект ще върне [object JSON]. От този момент на татък този подход се превърна в стандарт за идентифициране на местни обекти.</p>
+	   <p>Това, е същата характеристика на <em>Object.prototype</em>, която позволява на програмистите да идентифицират масиви в границите на вградената рамка и също предоставя начин да се разбере дали JSON е местен или не. Не-местен JSON обект ще върне [object Object], докато местния обект ще върне [object JSON]. От този момент на татък този подход се превърна в стандарт за идентифициране на местни обекти.</p>
 	   <h3>Отговора на ECMAScript 6</h3>
-	   <p>ECMAScript 6 обяснява това поведение чрез <em>Symbol.toStringTag</em> символа. Този символ представлява свойство на всеки обект, което определя, каква стойност трябва да се произведе, когато <em>Object.prototype.toString.call()</em> се извика върху него. За масив, функцията връща стойност обяснена за съхранение на "Array" в <em>Symbol.toStringTag</em> свойството. По същия начин, можем да определим <em>Symbol.toStringTag</em> стойността на местните обекти.</p>
+	   <p>ECMAScript 6 предефинира това поведение чрез <em>Symbol.toStringTag</em> символа. Този символ представлява свойство на всеки обект, което определя, каква стойност трябва да се произведе, когато <em>Object.prototype.toString.call()</em> се извика върху него. За масив, стойността която функцията връща се обяснява със съхранение на "Array" в <em>Symbol.toStringTag</em> свойството.</p>
+	   <p> По същия начин, можете да определите <em>Symbol.toStringTag</em> стойността на вашите собствени обекти.</p>
 	   <dl>
 	   	<dd><pre class="highlight-overflow">
 <span class="code">function</span> Person(name) {
@@ -495,13 +498,13 @@ console.log(isArray([]));   // true
 
 Person.prototype[Symbol.toStringTag] = "Person";
 
-<span class="code">var</span> me = <span class="code">new</span> Person("Nicholas");
+<span class="code">let</span> me = <span class="code">new</span> Person("Nicholas");
 
 console.log(me.toString());                         // "[object Person]"
 console.log(<span class="code">Object</span>.prototype.toString.call(me));    // "[object Person]"
 	   	</pre></dd>
 	   </dl>
-	   <p>В този пример, свойството <em>Symbol.toStringTag</em> се дефинира в <em>Person.prototype</em> за да осигури поведението по подразбиране за създаване на <em>string</em> представяне. Тъй като, <em>Person.prototype</em> наследява <em>Object.prototype.toString()</em>, стойността върната от <em>Symbol.toStringTag</em> се използва също, като извикване на <em>me.toString()</em>. Обаче, все още не можем да определим свой <em>toString()</em> метод, който осигурява различно поведение, без да засяга използването на <em>Object.prototype.toString.call()</em> метода. Ето как може да изглежда това:</p>
+	   <p>В този пример, свойството <em>Symbol.toStringTag</em> се дефинира в <em>Person.prototype</em> за да осигури поведение по подразбиране за създаване на <em>string</em> представяне. Тъй като, <em>Person.prototype</em> наследява <em>Object.prototype.toString()</em>, стойността върната от <em>Symbol.toStringTag</em> се използва също, като извикване на <em>me.toString()</em> метода. Обаче, все още не можем да определим свой <em>toString()</em> метод, който осигурява различно поведение, без да засяга използването на <em>Object.prototype.toString.call()</em> метода. Ето как може да изглежда това:</p>
 	   <dl>
 	   	<dd><pre class="highlight-overflow">
 <span class="code">function</span> Person(name) {
@@ -514,7 +517,7 @@ Person.prototype.toString = <span class="code">function</span>() {
     <span class="code">return this</span>.name;
 };
 
-<span class="code">var</span> me = <span class="code">new</span> Person("Nicholas");
+<span class="code">let</span> me = <span class="code">new</span> Person("Nicholas");
 
 console.log(me.toString());                         // "Nicholas"
 console.log(<span class="code">Object</span>.prototype.toString.call(me));    // "[object Person]"
@@ -539,7 +542,7 @@ Person.prototype.toString = <span class="code">function</span>() {
     <span class="code">return this</span>.name;
 };
 
-<span class="code">var</span> me = <span class="code">new</span> Person("Nicholas");
+<span class="code">let</span> me = <span class="code">new</span> Person("Nicholas");
 
 console.log(me.toString());                         // "Nicholas"
 console.log(<span class="code">Object</span>.prototype.toString.call(me));    // "[object Array]"
@@ -551,19 +554,19 @@ console.log(<span class="code">Object</span>.prototype.toString.call(me));    //
 	   	<dd><pre class="highlight-overflow">
 <span class="code">Array</span>.prototype[Symbol.toStringTag] = "Magic";
 
-<span class="code">var</span> values = [];
+<span class="code">let</span> values = [];
 
 console.log(<span class="code">Object</span>.prototype.toString.call(values));    // "[object Magic]"
 	   	</pre></dd>
 	   </dl>
 	   <p>Въпреки, че <em>Symbol.toStringTag</em> се презаписва за масивa в този пример, извикването на <em>Object.prototype.toString()</em> води до "[object Magic]". Въпреки, че не се препоръчва да се променят вградени обекти по този начин, няма нищо в езика, което да го забранява.</p>
 	   <h3>Symbol.unscopables</h3>
-	   <p>The <em>with</em> изявлението е една от най-спорните части в JavaScript. Първоначално предназначено за избягване на повторно писане, <em>with</em> изявлението по-късно става открито критикувано за правенето на кода по-трудно разбираем и отрицателните последици при изпълнение. В резултат на това, <em>with</em> изявлението не е разширено в <em>strict mode</em> режим( което се отразява на класове и модули, които са под <em>strict mode</em> режим, без право на изключения).</p>
+	   <p>The <em>with</em> изявлението е една от най-спорните части в JavaScript. Първоначално предназначено за избягване на повторно писане, <em>with</em> изявлението по-късно става открито критикувано за правенето на кода по-трудно разбираем и отрицателните последици при изпълнение. В резултат на това, <em>with</em> изявлението не е разширено в <em>strict mode</em> режим( което се отразява на класове и модули, които са под <em>strict mode</em> режим по подразбиране, без право на изключения).</p>
 	   <p> Въпреки, че няма бъдеще за <em>with</em> изявлението, ECMAScript 6 все още го поддържа в <em>nonstrict mode</em> режим и като такова, трябва да намери начин да позволи на кода да продължи да работи правилно с използването на  <em>with</em>.</p>
 	   <p>За да се разбере сложността на тази задача, да разгледаме следния код:</p>
 	   <dl>
 	   	<dd><pre class="highlight-overflow">
-<span class="code">var</span> values = [1, 2, 3],
+<span class="code">let</span> values = [1, 2, 3],
     colors = ["red", "green", "blue"],
     color = "black";
 
@@ -592,14 +595,15 @@ console.log(colors);    // ["red", "green", "blue", "black", 1, 2, 3]
 });
 	   	</pre></dd>
 	   </dl>
-	   <p>Обекта <em>Symbol.unscopables</em> има <em>null</em> прототип (създаден от <em>Object.create(null)</em>) и съдържа всички нови методи за масиви в  ECMAScript 6 (тези методи са разгледани подробно в <a href="08_iterators_and_generators.html">Глава 8</a> - Iterators и Generators и в <a href="10_array.html">Глава 10</a> - Масиви). Обвързванията за тези методи не са създадени вътре в <em>with</em> изявлението, което позволява на стария код да продължи да работи без никакъв проблем.</p>
+	   <p>Обекта <em>Symbol.unscopables</em> има <em>null</em> прототип създаден от <em>Object.create(null)</em> и съдържа всички нови методи за масиви в  ECMAScript 6 (тези методи са разгледани подробно в <a href="08_iterators_and_generators.html">Глава 8</a> - Iterators и Generators и в <a href="10_array.html">Глава 10</a> - Масиви). Обвързванията за тези методи не са създадени вътре в <em>with</em> изявлението, което позволява на стария код да продължи да работи без никакъв проблем.</p>
 	   <p>По принцип, не трябва да се дефинира <em>Symbol.unscopables</em> за вашите обекти, освен ако не използвате <em>with</em> изявление или се правят промени в съществуващ обект във вашия база код.</p>
 	 </article>
 	 <footer>
 	 	<h3>Обобщение</h3>
-	 	<p>Символите са нов вид примитивни стойности в JavaScript и се използват за създаване на <em>nonenumerable</em> свойства, които изискват символа за достъп. Докато не са наистина частни, с тези свойства е трудно да се променя или заменя и следователно са подходящи за функционалност, която се нуждае от ниво на защита от страна на разработчиците.</p>
-	 	<p>Може да предоставите описание за символи, което дава възможност за по-лесно идентифициране на символ стойности. Има глобален символ регистър, който позволява използването на споделени символи в различни части на кода с помощта на едно и също описание. По този начин един и същи символ може да се използва по същата причина на няколко места.</p>
-	 	<p>Символите не се връщат в методи, както <em>Object.keys()</em> или <em>Object.getOwnPropertyNames()</em>, така че е добавен нов метод, <em>Object.getOwnPropertySymbols()</em>, който дава възможност за извличане на символни свойствата. Вие можете да направите промени в символ свойствата, чрез използване на <em>Object.defineProperty()</em> и <em>Object.defineProperties()</em>.</p>
+	 	<p>Символите са нов вид примитивни стойности в JavaScript и се използват за създаване на <em>nonenumerable</em> свойства, които не могат да бъдат достъпни без да използват символ за достъп.</p>
+		 <p> Докато не са наистина частни, с тези свойства е трудно да се променя или заменя и следователно са подходящи за функционалност, която се нуждае от ниво на защита от страна на програмистите.</p>
+	 	<p>Може да предоставите описание за символи, което дава възможност за по-лесно идентифициране на символ стойности. Има глобален символ регистър, който позволява използването на споделени символи в различни части на кода с помощта на едно и също описание. По този начин един и същи символ може да се използва за същата причина на няколко места.</p>
+	 	<p>Методи, както <em>Object.keys()</em> или <em>Object.getOwnPropertyNames()</em> не връщат символи, така че е добавен нов метод <em>Object.getOwnPropertySymbols()</em>, който дава възможност за извличане на символни свойствата. Вие можете да направите промени в символ свойствата, чрез използване на <em>Object.defineProperty()</em> и <em>Object.defineProperties()</em>.</p>
 	 	<p><em>Well-known</em> символите са дефинирани преди това, само за вътрешна функционалност за стандартни обекти и използват глобално достъпни символни константи, като <em>Symbol.hasInstance</em>. Тези символи използват префикс <em>Symbol</em> в спецификацията и позволяват на програмистите да модифицират поведението на стандартен обект по най-различни начини.</p>
 	 </footer>
 	 <nav>
