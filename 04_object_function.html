@@ -383,7 +383,7 @@ console.log(<span class="code">Object</span>.getPrototypeOf(friend) === dog);   
 			</pre></dd>
 		</dl>
 		<p>В този пример, <em>getGreeting()</em> на <em>friend</em> извиква метода на прототип със същото име. Метода <em>Object.getPrototypeOf()</em> осигурява правилното извикване на прототипа и след това прилага допълнителен <em>string</em> към изхода. Допълнителното <em>.call(this)</em> гарантира, че тази <em>this</em> стойност вътре в метода на прототипа е зададена правилно.</p>
-		<p>Запомнянето на използването на <em>Object.getPrototypeOf()</em> и <em>.call(this)</em> за извикване на метода на прототипа е малко ангажиращо, за това ECMAScript 6 въвежда <em>super</em>. Най-просто казано, <em>super</em> е указател към текущия прототип на текущия обект, ефективно, както <em>Object.getPrototypeOf(this)</em> стойността. Знаейки това, можете да опростите <em>getGreeting()</em> метода, както следва:</p>
+		<p>Запомнянето на използването на <em>Object.getPrototypeOf()</em> и <em>.call(this)</em> за извикване на метода на прототипа е малко ангажиращо, затова ECMAScript 6 въвежда <em>super</em>. Най-просто казано, <em>super</em> е указател към текущия прототип на текущия обект, ефективно, както <em>Object.getPrototypeOf(this)</em> стойността. Знаейки това, можете да опростите <em>getGreeting()</em> метода, както следва:</p>
 		<dl>
 			<dd><pre class="highlight">
 <span class="code">let</span> friend = {
