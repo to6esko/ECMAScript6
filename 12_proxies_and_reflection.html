@@ -164,7 +164,7 @@ console.log(target.name);       // "target"
       <dd>
         <ol>
           <li><strong>trapTarget</strong> - обекта, който ще получи свойството (<em>proxy target</em>).</li>
-          <li><strong>key</strong> - ключ за свойството (<em>string</em> или символ) за записване.</li>
+          <li><strong>key</strong> - ключ за свойството (<em>string</em> или <em>simbol</em>) за записване.</li>
           <li><strong>value</strong> - стойност за записване на свойството.</li>
           <li><strong>receiver</strong> - обекта, на който се извършва операцията (обикновено е <em>proxy</em>).</li>
         </ol>
@@ -231,7 +231,7 @@ console.log(target.name);       // undefined
       <dd>
         <ol>
           <li><strong>trapTarget</strong> - обект, от който се чете свойството (<em>proxy target</em>).</li>
-          <li><strong>key</strong> - ключ за свойството (<em>string</em> или символ) за четене.</li>
+          <li><strong>key</strong> - ключ за свойството (<em>string</em> или <em>simbol</em>) за четене.</li>
           <li><strong>receiver</strong> - обекта, на който се извършва операцията (обикновено е <em>proxy</em>).</li>
         </ol>
       </dd>
@@ -264,7 +264,7 @@ console.log(proxy.nme);             <span class="comment"><em>// хвърля г
     <p>В този пример, <em>get trap</em> прихваща операциите при четене на свойства. Оператора <em>in</em> се използва за да определи дали свойството вече съществува в <em>receiver</em>. Използваме <em>receiver</em> с <em>in</em> вместо <em>trapTarget</em>, в случай, че <em>receiver</em> е <em>proxy</em>, който има <em>has trap</em>, тип който ще покрием в следващия раздел. Използването на <em>trapTarget</em> ще заобиколи наличието на <em>has trap</em> и потенциално ще даде грешен резултат. Грешка се хвърля , ако свойството не съществува, в противен случай се използва поведението по подразбиране.</p>
     <p>Този код разрешава добавянето на нови свойства, като <em>proxy.name</em>, които се четат и пишат без никакъв проблем. Последният ред съдържа правописна грешка, <em>proxy.nme</em>, което вероятно трябва да бъде <em>proxy.name</em>. Това хвърля грешка, защото <em>nme</em> не съществува, като свойство.</p>
     <h3>Скриване на наличието на свойства, използвайки  has Trap</h3>
-    <p>Оператора <em>in</em> определя дали съществува свойство в даден обект и връща <em>true</em> ако има съвпадение с името или символа на собствено или прототипно свойство. Например:</p>
+    <p>Оператора <em>in</em> определя дали съществува свойство в даден обект и връща <em>true</em> ако има съвпадение с името или <em>simbol</em> на собствено или прототипно свойство. Например:</p>
     <dl>
       <dd>
         <pre class="highlight">
@@ -284,7 +284,7 @@ console.log("toString" <span class="code">in</span> target);  // true
       <dd>
         <ol>
           <li><strong>trapTarget</strong> - обект, от който се чете свойството (<em>proxy target</em>).</li>
-          <li><strong>key</strong> - ключ за свойството (<em>string</em> или символ) за проверка.</li>
+          <li><strong>key</strong> - ключ за свойството (<em>string</em> или <em>simbol</em>) за проверка.</li>
         </ol>
       </dd>
     </dl>
@@ -349,7 +349,7 @@ console.log("name" <span class="code">in</span> target);      // true
       <dd>
         <ol>
           <li><strong>trapTarget</strong> - обект, от който трябва да се премахне свойството (<em>proxy target</em>).</li>
-          <li><strong>key</strong> - ключ за свойството (<em>string</em> или символ) за изтриване.</li>
+          <li><strong>key</strong> - ключ за свойството (<em>string</em> или <em>simbol</em>) за изтриване.</li>
         </ol>
       </dd>
     </dl>
@@ -597,7 +597,7 @@ console.log(result2);                               // true
         <dd>
           <ol>
             <li><strong>trapTarget</strong> - обекта, на който следва да бъде определено свойството (<em>proxy target</em>).</li>
-            <li><strong>key</strong>- <em>string</em> или символ за свойството.</li>
+            <li><strong>key</strong>- <em>string</em> или <em>simbol</em> за свойството.</li>
             <li><strong>descriptor</strong> - <em>descriptor</em> обект за свойството</li>
           </ol>
         </dd>
@@ -630,7 +630,7 @@ console.log(descriptor.value);      // "proxy"
       </dl>
       <p>Този код дефинира свойството "name" на <em>proxy</em> използвайки <em>Object.defineProperty()</em>. Свойството <em>descriptor</em> затова свойство се извлича с помощта на <em>Object.getOwnPropertyDescriptor()</em> метода.</p>
       <h3>Блокирване на Object.defineProperty()</h3>
-      <p>The <em>defineProperty trap</em> изисква от вас да върне булева стойност за да покаже, че операцията е била успешна. Когато се връща <em>true, Object.defineProperty()</em> успява, както обикновено; когато се връща <em>false, Object.defineProperty()</em> хвърля грешка. Можете да използвате тази функция, за да ограничите вида на свойството, което може да бъде определено с помощта на <em>Object.defineProperty()</em> метода. Например, ако искате да предотвратите да бъдат определени символни свойства, бихте могли да проверите дали ключа е <em>string</em> и да върне <em>false</em> ако не е. Например:</p>
+      <p>The <em>defineProperty trap</em> изисква от вас да върне булева стойност за да покаже, че операцията е била успешна. Когато се връща <em>true, Object.defineProperty()</em> успява, както обикновено; когато се връща <em>false, Object.defineProperty()</em> хвърля грешка. Можете да използвате тази функция, за да ограничите вида на свойството, което може да бъде определено с помощта на <em>Object.defineProperty()</em> метода. Например, ако искате да предотвратите да бъдат определени <em>simbol</em> свойства, бихте могли да проверите дали ключа е <em>string</em> и да върне <em>false</em> ако не е. Например:</p>
       <dl>
         <dd>
           <pre class="highlight-overflow">
