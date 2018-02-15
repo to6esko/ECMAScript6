@@ -46,7 +46,7 @@
 		<p>Това е стандартен
 			<em>for</em> цикъл, който създава променливата
 			<em>i</em> за да следи индекса в
-			<em>colors</em> <em>array</em>. Стойността на
+			<em>colors</em>. Стойността на
 			<em>i</em> се увеличава всеки път в цикъла, ако тя не стане по-голяма от дължината на <em>array</em> (съхраняван в
 			<em>len</em>).</p>
 		<p> Това е един сравнително прост пример, сложността нараства, когато се правят вложени цикли и трябва да се следят няколко
@@ -107,7 +107,7 @@ console.log(iterator.next());           // "{ value: undefined, done: true }"
 		<p>Функцията
 			<em>createIterator()</em> връща обект с
 			<em>next()</em> метод. Всеки път, когато метода се извика, се премества на следващата стойност в
-			<em>items</em> <em>array</em> и се връща, като
+			<em>items</em> и се връща, като
 			<em>value</em>. Когато
 			<em>i</em> е 3,
 			<em>done</em> става
@@ -357,7 +357,7 @@ console.log(iterator.next());           // "{ value: undefined, done: true }"
 		<p>Цикъла
 			<em>for-of</em> в този пример първо извиква
 			<em>Symbol.iterator</em> метода върху
-			<em>values</em> <em>array</em> за извличане на итератор. (Извикването на
+			<em>values</em> за извличане на итератор. (Извикването на
 			<em>Symbol.iterator</em> се случва зад кулисите в самия двигател на JavaScript). После, се извиква
 			<em>iterator.next()</em> и
 			<em>value</em> свойството в обекта на резултата, се чете от
@@ -887,7 +887,7 @@ console.log(allNumbers);    // [0, 1, 2, 3, 100, 101, 102]
 			<em>allNumbers</em> от стойностите на
 			<em>smallNumbers</em> и
 			<em>bigNumbers</em>. Стойностите са поставени в
-			<em>allNumbers</em> в реда, по който са вкарани в <em>arrays</em>, когато
+			<em>allNumbers</em> в реда, по който са вкарани в <em>array</em>, когато
 			<em>allNumbers</em> се създава: 0 е на първо място, следвана от стойностите на
 			<em>smallNumbers</em>, следвани от стойностите на
 			<em>bigNumbers</em>. Имайте в предвид, че оригиналните <em>arrays</em> са непроменени, само техните стойности са копирани в
