@@ -743,10 +743,10 @@ console.log(targetProto === <span class="code">Object</span>.prototype);      //
 console.log(proxyProto === <span class="code">Object</span>.prototype);       // false
 console.log(proxyProto);                            // null
 
-<span class="comment"><em></em>// succeeds (успех)</em></span>
+<span class="comment"><em>// succeeds (успех)</em></span>
 <span class="code">Object</span>.setPrototypeOf(target, {});
 
-<span class="comment"><em></em>// throws error</em></span>
+<span class="comment"><em><// throws error</em></span>
 <span class="code">Object</span>.setPrototypeOf(proxy, {});
         </pre>
       </dd>
@@ -787,10 +787,10 @@ console.log(proxyProto);                            // null
 console.log(targetProto === <span class="code">Object</span>.prototype);      // true
 console.log(proxyProto === <span class="code">Object</span>.prototype);       // true
 
-// успява
+<span class="comment"><em>// успява</em></span>
 <span class="code">Object</span>.setPrototypeOf(target, {});
 
-// също успява
+<span class="comment"><em>// също успява</em></span>
 <span class="code">Object</span>.setPrototypeOf(proxy, {});
             
           </pre>
@@ -833,7 +833,7 @@ console.log(proxyProto === <span class="code">Object</span>.prototype);       //
 <span class="code">let</span> result1 = <span class="code">Object</span>.getPrototypeOf(1);
 console.log(result1 === <span class="code">Number</span>.prototype);  // true
 
-// throws an error
+<span class="comment"><em>// throws an error</em></span>
 Reflect.getPrototypeOf(1);
           </pre>
       </dd>
@@ -994,7 +994,7 @@ console.log(<span class="code">Object</span>.isExtensible(proxy));        // tru
 <span class="code">let</span> result1 = <span class="code">Object</span>.isExtensible(2);
 console.log(result1);                       // false
 
-// throws error
+<span class="comment"><em>// throws error</em></span>
 <span class="code">let</span> result2 = Reflect.isExtensible(2);
           </pre>
       </dd>
