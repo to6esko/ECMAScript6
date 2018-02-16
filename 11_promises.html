@@ -267,7 +267,7 @@ method1(<span class="code">function</span>(err, result) {
 				<pre class="highlight">
 <span class="code">let</span> promise = readFile("example.txt");
 
-<span class="comment"><em>// слушаме, както за изпълнение, така и за отхвърляне</em></span>
+<span class="comment"><em>// слуша, както за изпълнение, така и за отхвърляне</em></span>
 promise.then(<span class="code">function</span>(contents) {
     <span class="comment"><em>// изпълнение</em></span>
     console.log(contents);
@@ -276,13 +276,13 @@ promise.then(<span class="code">function</span>(contents) {
     console.error(err.message);
 });
 
-<span class="comment"><em>// слушаме само за изпълнение - грешки не се отчитат</em></span>
+<span class="comment"><em>// слуша само за изпълнение - грешки не се отчитат</em></span>
 promise.then(<span class="code">function</span>(contents) {
     <span class="comment"><em>// изпълнение</em></span>
     console.log(contents);
 });
 
-<span class="comment"><em>// слушаме само за отхвърляне - успех не се съобщава</em></span>
+<span class="comment"><em>// слуша само за отхвърляне - успех не се съобщава</em></span>
 promise.then(<span class="code">null, function</span>(err) {
     <span class="comment"><em>// отхвърляне</em></span>
     console.error(err.message);
@@ -672,7 +672,7 @@ p1.catch(<span class="code">function</span>(value) {
 			<em>Promise.reject()</em> работят по този начин за да може лесно да се работи с
 			<em>non-promise thenables</em>. Много библиотеки използват
 			<em>thenables</em> още преди
-			<em>promise</em> се въведат в ECMAScript 6, така че възможността да се преобразуват
+			<em>promise</em> да се въведат в ECMAScript 6, така че възможността да се преобразуват
 			<em>thenables</em> във форма на
 			<em>promise</em> е важно за обратна съвместимост с предишните съществуващи библиотеки. Когато не сте сигурни дали един обект
 			е
