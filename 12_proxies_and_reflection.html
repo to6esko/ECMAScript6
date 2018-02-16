@@ -37,7 +37,7 @@
   <article>
     <h3>Проблем с arrays</h3>
     <p>
-      <em>array</em> обекта на JavaScript се държи по начин, който програмистите не можеха да имитират в собствените си обекти
+      <em>Array</em> обекта на JavaScript се държи по начин, който програмистите не можеха да имитират в собствените си обекти
       преди ECMAScript 6. Свойството
       <em>length</em> на
       <em>arrays</em> се засяга, когато присвоявате стойности към специфични елементи на
@@ -92,14 +92,14 @@ console.log(colors[1]);             // "green"
       <em>target</em> изглеждат, като един и същи обект на функционалност използвана от
       <em>proxy</em>.</p>
     <p>
-      <em>Proxies</em>, обаче ви позволява да пихващате операции от ниско ниво, които иначе са вътрешни за JavaScript машината.
+      <em>Proxies</em>, обаче ви позволява да прихващате операции от ниско ниво, които иначе са вътрешни за JavaScript машината.
       Тези операции от ниско ниво са засечени с помощта на
       <em>trap</em>, който е функция, която отговаря за конкретна операция.</p>
     <p>
       <em>Reflection API</em>, представлявана от
       <em>Reflect object</em>, е колекция от методи, които дават поведение по подразбиране за същите операции от ниско ниво,
       които
-      <em>proxies</em> могат да отменят. Има
+      <em>proxies</em> могат да заменят. Има
       <em>Reflect</em> метод за всеки
       <em>proxy trap</em>. Тези методи имат същото име и му се подават същите аргументи, както на неговия съответен
       <em>proxy trap</em>. Таблицата по-долу съдържа всички
@@ -743,10 +743,10 @@ console.log(targetProto === <span class="code">Object</span>.prototype);      //
 console.log(proxyProto === <span class="code">Object</span>.prototype);       // false
 console.log(proxyProto);                            // null
 
-// succeeds (успех)
+<span class="comment"><em></em>// succeeds (успех)</em></span>
 <span class="code">Object</span>.setPrototypeOf(target, {});
 
-// throws error
+<span class="comment"><em></em>// throws error</em></span>
 <span class="code">Object</span>.setPrototypeOf(proxy, {});
         </pre>
       </dd>
