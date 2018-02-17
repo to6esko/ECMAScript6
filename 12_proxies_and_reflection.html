@@ -622,7 +622,7 @@ console.log("name" <span class="code">in</span> target);      // true
       <em>deleteProperty trap</em> и приема същите два аргумента. Можете да комбинирате
       <em>Reflect.deleteProperty()</em> и
       <em>deleteProperty trap</em>, за да промените начина, по който
-      <em>delete</em> оператора се държи. Например, можете да се гарантирате, че
+      <em>delete</em> оператора се държи. Например, можете да гарантирате, че
       <em>value</em> свойството не може да бъде изтрито:</p>
     <dl>
       <dd>
@@ -1320,7 +1320,7 @@ console.log(descriptor1);       // undefined
       <em>strings</em> и
       <em>symbols</em>.
       <em>Object.getOwnProperyNames()</em> и
-      <em>Object.keys()</em>, филтрират символи от
+      <em>Object.keys()</em>, филтрират <em>symbols</em> от
       <em>array</em> и връщат резултата, докато
       <em>Object.getOwnPropertySymbols()</em> филтрира
       <em>strings</em> от
@@ -1419,7 +1419,7 @@ console.log(symbols[0]);        // "Symbol(name)"
       <dd>
         <ol>
           <li>
-            <strong>trapTarget</strong> - функцията се изпълнява (
+            <strong>trapTarget</strong> - функцията, която се изпълнява (
             <em>proxy target</em>).</li>
           <li>
             <strong>thisArg</strong> - стойността на
@@ -1437,7 +1437,7 @@ console.log(symbols[0]);        // "Symbol(name)"
       <dd>
         <ol>
           <li>
-            <strong>trapTarget</strong> - функцията се изпълнява (
+            <strong>trapTarget</strong> - функцията, която се изпълнява (
             <em>proxy target</em>).</li>
           <li>
             <strong>argumentsList</strong> -
@@ -1498,7 +1498,7 @@ console.log(instance <span class="code">instanceof</span> target);    // true
       от това
       <em>proxy</em>, то
       <em>proxy</em> и
-      <em>target</em> изглежда имат същия прототип на JavaScript машината.</p>
+      <em>target</em> изглежда имат същия прототип в JavaScript машината.</p>
     <h3>Валидиране на параметрите на функция</h3>
     <p>The
       <em>apply</em> и
